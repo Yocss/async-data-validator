@@ -1,0 +1,17 @@
+{
+  "name": "async-data-validator",
+  "version": "0.0.1",
+  "description": "validate form data asyncly",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "validate",
+    "form-validator",
+    "data-validator",
+    "validator"
+  ],
+  "author": "Yocss",
+  "license": "MIT"
+}
