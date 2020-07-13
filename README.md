@@ -36,7 +36,8 @@ ruleItem: {
   enum?: array<string>;
   type?: string;
   pattern?: regex;
-  validator?: async function
+  validator?: async function;
+  message: 'error message'
  }
 */
 
