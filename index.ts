@@ -5,15 +5,15 @@ import { Validate, ValidRule, Rule } from './src/dto/type.dto'
  * @params {Object} form { field: 'john' }
  * @returns {Object} { status: true, infos: [] }
  */
-export function validate (rules: Object, form: Object): Validate {
+export async function validate (rules: Object, form: Object): Promise<Validate> {
   const res = { status: true, infos: [] }
   const ruleKeys = Object.keys(rules)
-  ruleKeys.forEach(k => {
-    const val = form[k]
-    const subRules = rules[k]
+  for (let i = 0; i < ruleKeys.length; i++) {
+    const val = form[ruleKeys[i]]
+    const subRules = rules[ruleKeys[i]]
     switch (getType(subRules)) {
       case 'object': {
-        const d = validRule(subRules, val, k)
+        const d = await validRule(subRules, val, ruleKeys[i])
         if (!d.status) {
           res.infos.push({ message: d.message, field: d.key || '', value: val })
           res.status = false
@@ -21,9 +21,9 @@ export function validate (rules: Object, form: Object): Validate {
         break
       }
       case 'array': {
-        for (let i = 0; i < subRules.length; i++) {
+        for (let j = 0; j < subRules.length; j++) {
           let flag = true
-          const d = validRule(subRules[i], val, k)
+          const d = await validRule(subRules[j], val, ruleKeys[i])
           if (!d.status) {
             flag = false
             res.status = false
@@ -34,13 +34,13 @@ export function validate (rules: Object, form: Object): Validate {
         break
       }
     }
-  })
+  }
   return res
 }
 
 const rules = ['required', 'len', 'min', 'max', 'enum', 'type', 'pattern', 'validator']
 
-function validRule(rule: Rule, val: any, key: string): ValidRule {
+async function validRule(rule: Rule, val: any, key: string): Promise<ValidRule> {
   const aRule = Object.keys(rule)
   const res = { status: true, message: '', key }
   // 1. 取值的类型
@@ -84,7 +84,7 @@ function validRule(rule: Rule, val: any, key: string): ValidRule {
           break
         }
         case 'type': {
-          status = ruleVal === getType(val)
+          status = ruleVal.toLowerCase() === getType(val)
           break
         }
         case 'pattern': {
@@ -94,7 +94,7 @@ function validRule(rule: Rule, val: any, key: string): ValidRule {
         }
         case 'validator': {
           if (getType(ruleVal) === 'function' && ruleVal) {
-            status = ruleVal()
+            status = await ruleVal()
             break
           }
         }
