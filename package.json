@@ -1,10 +1,14 @@
 {
   "name": "async-data-validator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "validate form data asyncly",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yocss/async-data-validator"
   },
   "keywords": [
     "validate",
@@ -13,5 +17,9 @@
     "validator"
   ],
   "author": "Yocss",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Yocss/async-data-validator/issues"
+  },
+  "homepage": "https://github.com/Yocss/async-data-validator#readme"
 }
