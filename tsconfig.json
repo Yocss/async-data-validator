@@ -3,7 +3,7 @@
     "module": "AMD",
     "target": "es5",
     "lib": ["DOM", "ES2015", "ES2016.Array.Include", "ScriptHost", "ES5"],
-    "outDir": "lib",
+    "outDir": "lib"
     // "types": ["mocha", "assert"]
     // "noImplicitAny": true,
     // "removeComments": true,
@@ -11,5 +11,5 @@
     // "outFile": "lib/index.js",
     // "sourceMap": true,
     // "alwaysStrict": true
-  },
+  }
 }
