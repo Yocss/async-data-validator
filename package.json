@@ -21,5 +21,7 @@
   "bugs": {
     "url": "https://github.com/Yocss/async-data-validator/issues"
   },
-  "homepage": "https://github.com/Yocss/async-data-validator#readme"
+  "homepage": "https://github.com/Yocss/async-data-validator#readme",
+  "devDependencies": {},
+  "dependencies": {}
 }
