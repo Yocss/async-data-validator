@@ -53,13 +53,22 @@ async function validRule(rule: Rule, val: any, key: string): Promise<ValidRule> 
     let status = true
     res.message = rule.message
     if (rules.includes(k[i])) {
+      let isRequired = false
+      // 检测字段是否必填
+      const notNull = !(['', undefined, null, NaN].includes(val))
+      if (k[i] === 'required' && ruleVal) {
+        isRequired = true
+        status = notNull
+        if (!status) { break }
+      }
+      // 检测其他校验条件
       switch (k[i]) {
-        case 'required': {
-          if (ruleVal) { status = val !== '' }
-          break
-        }
+        // case 'required': {
+        //   if (ruleVal) { status = val !== '' }
+        //   break
+        // }
         case 'len': {
-          status = val.length === ruleVal
+          status = notNull ? val.length === ruleVal : !isRequired
           break
         }
         case 'min': {
@@ -67,7 +76,7 @@ async function validRule(rule: Rule, val: any, key: string): Promise<ValidRule> 
           if (valType === 'number') {
             status = val >= ruleVal
           } else {
-            status = val.length >= ruleVal
+            status = notNull ? val.length >= ruleVal : !isRequired
           }
           break
         }
@@ -75,25 +84,25 @@ async function validRule(rule: Rule, val: any, key: string): Promise<ValidRule> 
           if (valType === 'number') {
             status = val <= ruleVal
           } else {
-            status = val.length <= ruleVal
+            status = notNull ? val.length <= ruleVal : !isRequired
           }
           break
         }
         case 'enum': {
-          status = ruleVal.includes(val)
+          status = notNull ? ruleVal.includes(val) : !isRequired
           break
         }
         case 'type': {
-          status = ruleVal.toLowerCase() === getType(val)
+          status = notNull ? ruleVal.toLowerCase() === getType(val) : !isRequired
           break
         }
         case 'pattern': {
           const reg = new RegExp(ruleVal)
-          status = reg.test(val)
+          status = notNull ? reg.test(val) : !isRequired
           break
         }
         case 'validator': {
-          if (getType(ruleVal) === 'function' && ruleVal) {
+          if (getType(ruleVal) === 'function' && ruleVal && val) {
             status = await ruleVal()
             break
           }
