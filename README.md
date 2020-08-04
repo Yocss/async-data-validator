@@ -7,7 +7,7 @@
 
 # Usage
 ```javascript
-import { validate } from 'async-data-validator'
+import validate from 'async-data-validator'
 const result = await validate(rules, form)
 ```
 

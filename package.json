@@ -1,6 +1,6 @@
 {
   "name": "async-data-validator",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "validate form data asyncly",
   "main": "index.js",
   "scripts": {
